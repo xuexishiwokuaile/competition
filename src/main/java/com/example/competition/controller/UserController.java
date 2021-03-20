@@ -45,7 +45,7 @@ public class UserController {
      * @return com.example.competition.model.User
      */
     @RequestMapping(value = "/findOneById", method = RequestMethod.GET)
-    public User findOneById(@RequestParam(value = "id") int id) {
+    public User findOneById(@RequestParam(value = "id") String id) {
         try {
             return userService.findOneById(id);
         } catch (SelectException e) {

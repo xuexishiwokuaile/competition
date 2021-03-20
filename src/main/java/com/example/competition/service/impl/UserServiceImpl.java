@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findOneById(int id) throws SelectException {
+    public User findOneById(String id) throws SelectException {
         return userDao.findOneById(id);
     }
 

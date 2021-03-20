@@ -53,7 +53,7 @@ public interface UserDao {
      * @return user 目标用户
      */
     @Select("SELECT * FROM user WHERE id = #{id}")
-    User findOneById(int id);
+    User findOneById(String id);
 
     /**
      * 通过名称查找一个用户
