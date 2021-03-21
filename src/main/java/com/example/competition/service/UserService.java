@@ -47,7 +47,7 @@ public interface UserService {
      * @return user 用户
      * @throws SelectException 查询异常
      */
-    User findOneById(String id) throws SelectException;
+    User findOneById(int id) throws SelectException;
 
     /**
      * 根据name查找用户

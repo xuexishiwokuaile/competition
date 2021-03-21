@@ -5,7 +5,6 @@ import com.example.competition.exception.SelectException;
 import com.example.competition.model.User;
 import com.example.competition.service.UserService;
 import com.example.competition.util.ReturnMsgUtil;
-import com.example.competition.util.StringFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +28,8 @@ public class UserController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnMsgUtil add(@RequestBody User user) {
-        user.setId(StringFormatUtil.randomString());
         try {
+            System.out.println(user.getName());
             userService.add(user);
             return new ReturnMsgUtil(0, "success");
         } catch (AddException e) {
@@ -45,7 +44,7 @@ public class UserController {
      * @return com.example.competition.model.User
      */
     @RequestMapping(value = "/findOneById", method = RequestMethod.GET)
-    public User findOneById(@RequestParam(value = "id") String id) {
+    public User findOneById(@RequestParam(value = "id") int id) {
         try {
             return userService.findOneById(id);
         } catch (SelectException e) {

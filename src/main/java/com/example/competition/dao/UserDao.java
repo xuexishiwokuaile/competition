@@ -1,10 +1,7 @@
 package com.example.competition.dao;
 
 import com.example.competition.model.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,8 +19,9 @@ public interface UserDao {
      * @param user 目标用户
      * @return int 受影响的行数
      */
-    @Insert("INSERT INTO user (`id`, `name`, `password`, `phone`, `status`) " +
-            "VALUES (#{id}, #{name}, #{password}, #{phone}, 0)")
+    @Insert("INSERT INTO user (`name`, `password`, `phone`, `status`,`gender`) " +
+            "VALUES (#{name}, #{password}, #{phone}, 0, #{gender})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int add(User user);
 
     /**
@@ -53,7 +51,7 @@ public interface UserDao {
      * @return user 目标用户
      */
     @Select("SELECT * FROM user WHERE id = #{id}")
-    User findOneById(String id);
+    User findOneById(int id);
 
     /**
      * 通过名称查找一个用户

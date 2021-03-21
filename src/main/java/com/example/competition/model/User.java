@@ -5,17 +5,19 @@ package com.example.competition.model;
  * @date 2021/3/20
  */
 public class User {
-    private String id;
+    private int id;
     private String name;
     private String password;
     private String phone;
     private int status;
+    private int gender;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
+        System.out.println(id);
         this.id = id;
     }
 
@@ -49,5 +51,13 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }
