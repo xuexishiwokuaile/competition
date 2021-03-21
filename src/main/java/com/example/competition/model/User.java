@@ -9,7 +9,7 @@ public class User {
     private String name;
     private String password;
     private String phone;
-    private int status;
+    private int roleId;
     private int gender;
 
     public int getId() {
@@ -17,7 +17,6 @@ public class User {
     }
 
     public void setId(int id) {
-        System.out.println(id);
         this.id = id;
     }
 
@@ -45,12 +44,12 @@ public class User {
         this.phone = phone;
     }
 
-    public int getStatus() {
-        return status;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public int getGender() {

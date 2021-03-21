@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Chen Anran
@@ -19,7 +20,7 @@ public interface UserDao {
      * @param user 目标用户
      * @return int 受影响的行数
      */
-    @Insert("INSERT INTO user (`name`, `password`, `phone`, `status`,`gender`) " +
+    @Insert("INSERT INTO user (`name`, `password`, `phone`, `roleId`,`gender`) " +
             "VALUES (#{name}, #{password}, #{phone}, 0, #{gender})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int add(User user);
@@ -70,4 +71,11 @@ public interface UserDao {
      */
     @Select("SELECT * FROM user")
     List<User> findAll();
+
+    @Select("SELECT `roleName` FROM role, user WHERE user.name = #{name} AND role.roleId = user.roleId")
+    Set<String> findRoles(String name);
+
+    @Select("SELECT `permissionName` FROM permission, user WHERE user.name = #{name} AND " +
+            "permission.roleId = user.roleId")
+    Set<String> findPermissions(String name);
 }

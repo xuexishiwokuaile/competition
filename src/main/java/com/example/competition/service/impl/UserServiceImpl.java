@@ -3,7 +3,6 @@ package com.example.competition.service.impl;
 import com.example.competition.dao.UserDao;
 import com.example.competition.exception.AddException;
 import com.example.competition.exception.DeleteException;
-import com.example.competition.exception.SelectException;
 import com.example.competition.exception.UpdateException;
 import com.example.competition.model.User;
 import com.example.competition.service.UserService;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Chen Anran
@@ -37,17 +37,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findOneById(int id) throws SelectException {
+    public User findOneById(int id) {
         return userDao.findOneById(id);
     }
 
     @Override
-    public User findOneByName(String name) throws SelectException {
+    public User findOneByName(String name) {
         return userDao.findOneByName(name);
     }
 
     @Override
-    public List<User> findAll() throws SelectException {
+    public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public Set<String> findRoles(String name) {
+        return userDao.findRoles(name);
+    }
+
+    @Override
+    public Set<String> findPermissions(String name) {
+        return userDao.findPermissions(name);
     }
 }

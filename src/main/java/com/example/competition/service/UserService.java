@@ -7,6 +7,7 @@ import com.example.competition.exception.UpdateException;
 import com.example.competition.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Chen Anran
@@ -47,7 +48,7 @@ public interface UserService {
      * @return user 用户
      * @throws SelectException 查询异常
      */
-    User findOneById(int id) throws SelectException;
+    User findOneById(int id);
 
     /**
      * 根据name查找用户
@@ -56,7 +57,7 @@ public interface UserService {
      * @return user 用户
      * @throws SelectException 查询异常
      */
-    User findOneByName(String name) throws SelectException;
+    User findOneByName(String name);
 
     /**
      * 查找所有用户
@@ -64,5 +65,9 @@ public interface UserService {
      * @param
      * @return com.example.competition.model.User
      */
-    List<User> findAll() throws SelectException;
+    List<User> findAll();
+
+    public Set<String> findRoles(String name);
+
+    public Set<String> findPermissions(String name);
 }

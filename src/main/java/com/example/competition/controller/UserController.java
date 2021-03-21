@@ -1,10 +1,13 @@
 package com.example.competition.controller;
 
 import com.example.competition.exception.AddException;
-import com.example.competition.exception.SelectException;
 import com.example.competition.model.User;
 import com.example.competition.service.UserService;
+import com.example.competition.util.MD5Util;
 import com.example.competition.util.ReturnMsgUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +32,7 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnMsgUtil add(@RequestBody User user) {
         try {
-            System.out.println(user.getName());
+            user.setPassword(MD5Util.md5(user.getPassword()));
             userService.add(user);
             return new ReturnMsgUtil(0, "success");
         } catch (AddException e) {
@@ -45,12 +48,7 @@ public class UserController {
      */
     @RequestMapping(value = "/findOneById", method = RequestMethod.GET)
     public User findOneById(@RequestParam(value = "id") int id) {
-        try {
-            return userService.findOneById(id);
-        } catch (SelectException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return userService.findOneById(id);
     }
 
     /**
@@ -61,12 +59,7 @@ public class UserController {
      */
     @RequestMapping(value = "/findOneByName", method = RequestMethod.GET)
     public User findOneByName(@RequestParam(value = "name") String name) {
-        try {
-            return userService.findOneByName(name);
-        } catch (SelectException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return userService.findOneByName(name);
     }
 
     /**
@@ -77,11 +70,18 @@ public class UserController {
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public List<User> findAll() {
+        return userService.findAll();
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ReturnMsgUtil login(@RequestBody User user) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), MD5Util.md5(user.getPassword()));
         try {
-            return userService.findAll();
-        } catch (SelectException e) {
-            System.out.println(e.getMessage());
-            return null;
+            subject.login(token);
+            return new ReturnMsgUtil(1, "登录成功");
+        } catch (Exception e) {
+            return new ReturnMsgUtil(0, "登录失败");
         }
     }
 }

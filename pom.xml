@@ -82,16 +82,9 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-web -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
+            <artifactId>shiro-all</artifactId>
             <version>1.4.0</version>
         </dependency>
         <dependency>
