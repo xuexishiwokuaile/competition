@@ -1,8 +1,20 @@
 package com.example.competition.util;
 
-public class ReturnMsgUtil {
-    private int state;   //状态：0：成功，1：失败
-    private String message;  //相关信息
+import java.io.Serializable;
+
+/**
+ * @author Chen Anran
+ * @date 2021/3/21
+ */
+public class ReturnMsgUtil implements Serializable {
+    /**
+     * 状态 0：失败 1：成功
+     */
+    private int state;
+    /**
+     * 相关信息
+     */
+    private String message;
 
     public int getState() {
         return state;

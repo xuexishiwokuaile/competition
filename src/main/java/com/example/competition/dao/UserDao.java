@@ -72,9 +72,21 @@ public interface UserDao {
     @Select("SELECT * FROM user")
     List<User> findAll();
 
+    /**
+     * 查找一个用户的所有角色类型
+     *
+     * @param name 用户name
+     * @return java.util.Set<java.lang.String>
+     */
     @Select("SELECT `roleName` FROM role, user WHERE user.name = #{name} AND role.roleId = user.roleId")
     Set<String> findRoles(String name);
 
+    /**
+     * 查找一个用户允许的操作
+     *
+     * @param name 用户name
+     * @return java.util.Set<java.lang.String>
+     */
     @Select("SELECT `permissionName` FROM permission, user WHERE user.name = #{name} AND " +
             "permission.roleId = user.roleId")
     Set<String> findPermissions(String name);

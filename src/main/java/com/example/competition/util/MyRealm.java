@@ -15,6 +15,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import javax.annotation.Resource;
 import java.util.Set;
 
+/**
+ * @author Chen Anran
+ * @date 2021/3/21
+ */
 public class MyRealm extends AuthorizingRealm {
     @Resource
     private UserService userService;
@@ -46,13 +50,13 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {
-        //获取用户账号
+        // 获取用户账号
         String username = token.getPrincipal().toString();
         User user = userService.findOneByName(username);
         if (user != null) {
-            //将查询到的用户账号和密码存放到 authenticationInfo用于后面的权限判断。第三个参数随便放一个就行了。
+            // 将查询到的用户账号和密码存放到 authenticationInfo用于后面的权限判断
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getName(), user.getPassword(),
-                    "aaa");
+                    "MyRealm");
             return authenticationInfo;
         } else {
             return null;

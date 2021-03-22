@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public interface UserService {
     /**
-     * 添加一个新用户
+     * 添加一个新用户（注册）
      *
      * @param user 目标用户
      * @return void
@@ -67,7 +67,19 @@ public interface UserService {
      */
     List<User> findAll();
 
-    public Set<String> findRoles(String name);
+    /**
+     * 查找用户的角色
+     *
+     * @param name 用户name
+     * @return java.util.Set<java.lang.String>
+     */
+    Set<String> findRoles(String name);
 
-    public Set<String> findPermissions(String name);
+    /**
+     * 查找用户允许的操作
+     *
+     * @param name 用户name
+     * @return java.util.Set<java.lang.String>
+     */
+    Set<String> findPermissions(String name);
 }

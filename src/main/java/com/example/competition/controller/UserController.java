@@ -11,6 +11,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 添加用户
+     * 添加用户（注册）
      *
      * @param user 用户
      * @return com.example.competition.util.ReturnMsgUtil
@@ -73,15 +75,23 @@ public class UserController {
         return userService.findAll();
     }
 
+    /**
+     * 登录
+     *
+     * @param user 用户
+     * @return com.example.competition.util.ReturnMsgUtil
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ReturnMsgUtil login(@RequestBody User user) {
+    public ReturnMsgUtil login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), MD5Util.md5(user.getPassword()));
         try {
+            // rememberMe cookie实现在客户端保存用户的登录状态
+            token.setRememberMe(true);
             subject.login(token);
             return new ReturnMsgUtil(1, "登录成功");
         } catch (Exception e) {
-            return new ReturnMsgUtil(0, "登录失败");
+            return new ReturnMsgUtil(0, e.getMessage());
         }
     }
 }

@@ -6,6 +6,7 @@ import com.example.competition.exception.DeleteException;
 import com.example.competition.exception.UpdateException;
 import com.example.competition.model.User;
 import com.example.competition.service.UserService;
+import com.example.competition.util.StringFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User user) throws AddException {
-        userDao.add(user);
+        if (user == null) {
+            throw new AddException("添加用户错误：未提供用户");
+        } else if (userDao.findOneByName(user.getName()) != null) {
+            throw new AddException("添加用户错误：用户名称重复");
+        } else if (StringFormatUtil.hasEmpty(user.getName())
+                || StringFormatUtil.hasEmpty(user.getPassword())
+                || StringFormatUtil.hasEmpty(user.getPhone())) {
+            throw new AddException("添加用户错误：信息含空");
+        }
+
+        int result;
+        try {
+            result = userDao.add(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AddException("添加用户错误：" + e.getMessage());
+        }
+
+        if (result > 0) {
+            System.out.println("注册成功");
+        }
     }
 
     @Override
