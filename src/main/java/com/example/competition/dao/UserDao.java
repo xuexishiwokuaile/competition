@@ -41,9 +41,18 @@ public interface UserDao {
      * @return int 受影响的行数
      */
     @Update("UPDATE user SET " +
-            "name = #{name}, password = #{password}, phone = #{phone} " +
+            "name = #{name}, phone = #{phone} " +
             "WHERE id = #{id}")
     int update(User user);
+
+    /**
+     * 更新用户密码
+     *
+     * @param user 用户
+     * @return int 受影响的行数
+     */
+    @Update("UPDATE user SET password = #{password} WHERE id = #{id}")
+    int updatePassword(User user);
 
     /**
      * 通过id查找一个用户

@@ -42,6 +42,14 @@ public interface UserService {
     void update(User user) throws UpdateException;
 
     /**
+     * 更新用户密码
+     *
+     * @param user 用户
+     * @return void
+     */
+    void updatePassword(User user) throws UpdateException;
+
+    /**
      * 根据id查找用户
      *
      * @param id 目标id

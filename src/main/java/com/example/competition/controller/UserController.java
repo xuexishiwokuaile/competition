@@ -1,6 +1,8 @@
 package com.example.competition.controller;
 
 import com.example.competition.exception.AddException;
+import com.example.competition.exception.DeleteException;
+import com.example.competition.exception.UpdateException;
 import com.example.competition.model.User;
 import com.example.competition.service.UserService;
 import com.example.competition.util.MD5Util;
@@ -11,8 +13,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,11 +34,58 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnMsgUtil add(@RequestBody User user) {
         try {
-            user.setPassword(MD5Util.md5(user.getPassword()));
             userService.add(user);
-            return new ReturnMsgUtil(0, "success");
+            return new ReturnMsgUtil(1, "添加用户成功");
         } catch (AddException e) {
-            return new ReturnMsgUtil(1, e.getMessage());
+            return new ReturnMsgUtil(0, e.getMessage());
+        }
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param id 用户id
+     * @return com.example.competition.util.ReturnMsgUtil
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ReturnMsgUtil delete(@RequestParam(value = "id") int id) {
+        try {
+            userService.delete(id);
+            return new ReturnMsgUtil(1, "删除用户成功");
+        } catch (DeleteException e) {
+            return new ReturnMsgUtil(0, e.getMessage());
+        }
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user 用户
+     * @return com.example.competition.util.ReturnMsgUtil
+     */
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    public ReturnMsgUtil update(@RequestBody User user) {
+        try {
+            userService.update(user);
+            return new ReturnMsgUtil(1, "更新用户成功");
+        } catch (UpdateException e) {
+            return new ReturnMsgUtil(0, e.getMessage());
+        }
+    }
+
+    /**
+     * 更新用户密码
+     *
+     * @param user 用户
+     * @return com.example.competition.util.ReturnMsgUtil
+     */
+    @RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
+    public ReturnMsgUtil updatePassword(@RequestBody User user) {
+        try {
+            userService.updatePassword(user);
+            return new ReturnMsgUtil(1, "更新用户密码成功");
+        } catch (UpdateException e) {
+            return new ReturnMsgUtil(0, e.getMessage());
         }
     }
 
@@ -82,7 +129,7 @@ public class UserController {
      * @return com.example.competition.util.ReturnMsgUtil
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ReturnMsgUtil login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+    public ReturnMsgUtil login(@RequestBody User user) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), MD5Util.md5(user.getPassword()));
         try {
